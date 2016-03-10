@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('testApp', [
-  'testApp.constants',
+angular.module('gamePlatformServerApp', [
+  'gamePlatformServerApp.constants',
   'ngCookies',
   'ngResource',
   'ngSanitize',

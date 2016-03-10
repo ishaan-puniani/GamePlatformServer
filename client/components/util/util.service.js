@@ -59,7 +59,7 @@ function UtilService($window) {
   return Util;
 }
 
-angular.module('testApp.util')
+angular.module('gamePlatformServerApp.util')
   .factory('Util', UtilService);
 
 })();

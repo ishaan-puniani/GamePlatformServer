@@ -14,5 +14,5 @@ class NavbarController {
     }
 }
 
-angular.module('testApp')
+angular.module('gamePlatformServerApp')
   .controller('NavbarController', NavbarController);

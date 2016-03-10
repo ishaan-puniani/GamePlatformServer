@@ -1,4 +1,4 @@
-// Generated on 2016-03-02 using generator-angular-fullstack 3.3.0
+// Generated on 2016-03-10 using generator-angular-fullstack 3.3.0
 'use strict';
 
 module.exports = function (grunt) {
@@ -303,7 +303,7 @@ module.exports = function (grunt) {
     // `server/config/environment/shared.js`
     ngconstant: {
       options: {
-        name: 'testApp.constants',
+        name: 'gamePlatformServerApp.constants',
         dest: '<%= yeoman.client %>/app/app.constant.js',
         deps: [],
         wrap: true,
@@ -322,7 +322,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       options: {
         // This should be the name of your apps angular module
-        module: 'testApp',
+        module: 'gamePlatformServerApp',
         htmlmin: {
           collapseBooleanAttributes: true,
           collapseWhitespace: true,

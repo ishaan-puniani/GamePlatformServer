@@ -25,7 +25,7 @@ class MainController {
   }
 }
 
-angular.module('testApp')
+angular.module('gamePlatformServerApp')
   .controller('MainController', MainController);
 
 })();

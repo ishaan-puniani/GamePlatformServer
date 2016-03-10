@@ -3,7 +3,7 @@
 describe('Controller: MainController', function() {
 
   // load the controller's module
-  beforeEach(module('testApp'));
+  beforeEach(module('gamePlatformServerApp'));
   beforeEach(module('stateMock'));
 
   var scope;

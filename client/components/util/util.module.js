@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('testApp.util', []);
+angular.module('gamePlatformServerApp.util', []);

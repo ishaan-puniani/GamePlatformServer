@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('testApp')
+angular.module('gamePlatformServerApp')
   .config(function($stateProvider) {
     $stateProvider
       .state('main', {
