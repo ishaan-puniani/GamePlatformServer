@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('gamePlatformServerApp', [
+  'gamePlatformServerApp.auth',
+  'gamePlatformServerApp.admin',
   'gamePlatformServerApp.constants',
   'ngCookies',
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'validation.match'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
