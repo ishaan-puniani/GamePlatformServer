@@ -4,7 +4,8 @@ var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 
 var GamesSchema = new mongoose.Schema({
   name: String,
-  info: String,
+  gameId: String,
+  variant: String,
   active: Boolean
 });
 

@@ -1,16 +1,16 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/games              ->  index
- * POST    /api/games              ->  create
- * GET     /api/games/:id          ->  show
- * PUT     /api/games/:id          ->  update
- * DELETE  /api/games/:id          ->  destroy
+ * GET     /api/configurations              ->  index
+ * POST    /api/configurations              ->  create
+ * GET     /api/configurations/:id          ->  show
+ * PUT     /api/configurations/:id          ->  update
+ * DELETE  /api/configurations/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Game from './game.model';
+import Configuration from './configuration.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -59,43 +59,43 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Games
+// Gets a list of Configurations
 export function index(req, res) {
-  Game.findAsync()
+  Configuration.findAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Game from the DB
+// Gets a single Configuration from the DB
 export function show(req, res) {
-  Game.findByIdAsync(req.params.id)
+  Configuration.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Game in the DB
+// Creates a new Configuration in the DB
 export function create(req, res) {
-  Game.createAsync(req.body)
+  Configuration.createAsync(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Game in the DB
+// Updates an existing Configuration in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Game.findByIdAsync(req.params.id)
+  Configuration.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Game from the DB
+// Deletes a Configuration from the DB
 export function destroy(req, res) {
-  Game.findByIdAsync(req.params.id)
+  Configuration.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

@@ -3,39 +3,39 @@
 var app = require('../..');
 import request from 'supertest';
 
-var newGame;
+var newConfiguration;
 
-describe('Game API:', function() {
+describe('Configuration API:', function() {
 
-  describe('GET /api/games', function() {
-    var games;
+  describe('GET /api/configurations', function() {
+    var configurations;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/games')
+        .get('/api/configurations')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          games = res.body;
+          configurations = res.body;
           done();
         });
     });
 
     it('should respond with JSON array', function() {
-      expect(games).to.be.instanceOf(Array);
+      expect(configurations).to.be.instanceOf(Array);
     });
 
   });
 
-  describe('POST /api/games', function() {
+  describe('POST /api/configurations', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/games')
+        .post('/api/configurations')
         .send({
-          name: 'New Game',
+          name: 'New Configuration',
           info: 'This is the brand new thing!!!'
         })
         .expect(201)
@@ -44,24 +44,24 @@ describe('Game API:', function() {
           if (err) {
             return done(err);
           }
-          newGame = res.body;
+          newConfiguration = res.body;
           done();
         });
     });
 
     it('should respond with the newly created thing', function() {
-      expect(newGame.name).to.equal('New Game');
-      expect(newGame.info).to.equal('This is the brand new thing!!!');
+      expect(newConfiguration.name).to.equal('New Configuration');
+      expect(newConfiguration.info).to.equal('This is the brand new thing!!!');
     });
 
   });
 
-  describe('GET /api/games/:id', function() {
+  describe('GET /api/configurations/:id', function() {
     var thing;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/games/' + newGame._id)
+        .get('/api/configurations/' + newConfiguration._id)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -78,20 +78,20 @@ describe('Game API:', function() {
     });
 
     it('should respond with the requested thing', function() {
-      expect(thing.name).to.equal('New Game');
+      expect(thing.name).to.equal('New Configuration');
       expect(thing.info).to.equal('This is the brand new thing!!!');
     });
 
   });
 
-  describe('PUT /api/games/:id', function() {
-    var updatedGame;
+  describe('PUT /api/configurations/:id', function() {
+    var updatedConfiguration;
 
     beforeEach(function(done) {
       request(app)
-        .put('/api/games/' + newGame._id)
+        .put('/api/configurations/' + newConfiguration._id)
         .send({
-          name: 'Updated Game',
+          name: 'Updated Configuration',
           info: 'This is the updated thing!!!'
         })
         .expect(200)
@@ -100,27 +100,27 @@ describe('Game API:', function() {
           if (err) {
             return done(err);
           }
-          updatedGame = res.body;
+          updatedConfiguration = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      updatedGame = {};
+      updatedConfiguration = {};
     });
 
     it('should respond with the updated thing', function() {
-      expect(updatedGame.name).to.equal('Updated Game');
-      expect(updatedGame.info).to.equal('This is the updated thing!!!');
+      expect(updatedConfiguration.name).to.equal('Updated Configuration');
+      expect(updatedConfiguration.info).to.equal('This is the updated thing!!!');
     });
 
   });
 
-  describe('DELETE /api/games/:id', function() {
+  describe('DELETE /api/configurations/:id', function() {
 
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete('/api/games/' + newGame._id)
+        .delete('/api/configurations/' + newConfiguration._id)
         .expect(204)
         .end((err, res) => {
           if (err) {
@@ -132,7 +132,7 @@ describe('Game API:', function() {
 
     it('should respond with 404 when thing does not exist', function(done) {
       request(app)
-        .delete('/api/games/' + newGame._id)
+        .delete('/api/configurations/' + newConfiguration._id)
         .expect(404)
         .end((err, res) => {
           if (err) {
