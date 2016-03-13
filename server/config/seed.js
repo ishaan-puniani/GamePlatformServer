@@ -10,6 +10,7 @@ var defaultConfig = require('./defaultConfig/' + process.env.NODE_ENV + '.js') |
 
 import Thing from '../api/thing/thing.model';
 import Configurations from '../api/configurations/configuration.model';
+import Game from '../api/game/game.model';
 
 
 import User from '../api/user/user.model';
@@ -17,6 +18,11 @@ import User from '../api/user/user.model';
 Thing.find({}).removeAsync()
   .then(() => {
     Thing.create(defaultConfig.things);
+  });
+
+Game.find({}).removeAsync()
+  .then(() => {
+    Game.create(defaultConfig.games);
   });
 
 

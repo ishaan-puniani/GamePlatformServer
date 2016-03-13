@@ -65,7 +65,12 @@ export function index(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
-
+// Gets a filtered list of Games
+export function fetch(req, res) {
+  Game.findAsync(req.body.filter)
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
 // Gets a single Game from the DB
 export function show(req, res) {
   Game.findByIdAsync(req.params.id)

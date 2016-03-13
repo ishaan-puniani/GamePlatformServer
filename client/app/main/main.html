@@ -13,6 +13,10 @@
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in main.awesomeThings">
         <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}</a></li>
       </ul>
+      <select class="form-control dropdown" name="game" ng-model="main.selectedGame"
+                                    ng-options="game.name for game in main.availableGames track by game._id"></select>
+      <button ng-click="main.getGameResponse()">Get Game Response</button>
+         
     </div>
   </div>
 </div>

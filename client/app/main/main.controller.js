@@ -7,10 +7,20 @@ class MainController {
   constructor($http) {
     this.$http = $http;
     this.awesomeThings = [];
-
     $http.get('/api/things').then(response => {
       this.awesomeThings = response.data;
     });
+    
+    this.availableGames = [];
+    $http.get('/api/games',{filter:{active:true}}).then(response => {
+      this.availableGames = response.data;
+    });
+      
+  }
+  
+  getGameResponse(){
+      debugger;
+      alert(this.selectedGame.gameId);
   }
 
   addThing() {
