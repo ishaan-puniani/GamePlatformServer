@@ -109,11 +109,11 @@ export function destroy(req, res) {
 }
 
 export function play(req, res){
-    console.log(req.body.game);
-    var action = 'init';
+    console.log(req.body.game,req.body.action);
+    
     request.post(GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute", {form:{
           game: req.body.game,
-          action: action
+          action: req.body.action
         }},function(err,httpResponse,body){
             respondWithResult(res)(body);       
     });
