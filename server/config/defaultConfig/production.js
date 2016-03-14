@@ -12,7 +12,7 @@ import constants from '../../constants';
                 {
                     name: constants.configurationKeys.gameServerUrl,
                     description: "Url of game execution server",
-                    value: "http://localhost:9001",
+                    value: "http://gameserver-gameolive.rhcloud.com",
                     active: true
                 },
                 {
@@ -23,6 +23,12 @@ import constants from '../../constants';
                 }
 
             ],
+            games: [{
+                    name: "Slot",
+                    gameId: "Slot_Server",
+                    variant: "desktop",
+                    active: true
+                }],
             users: [{
                     provider: 'local',
                     name: 'Test User',

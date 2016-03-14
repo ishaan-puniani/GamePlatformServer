@@ -25,7 +25,7 @@ import constants from '../../constants';
             ],
             games: [{
                     name: "Slot",
-                    gameId: "slot",
+                    gameId: "Slot_Server",
                     variant: "desktop",
                     active: true
                 }],

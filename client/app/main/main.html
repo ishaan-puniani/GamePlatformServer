@@ -16,7 +16,8 @@
       <select class="form-control dropdown" name="game" ng-model="main.selectedGame"
                                     ng-options="game.name for game in main.availableGames track by game._id"></select>
       <button ng-click="main.getGameResponse()">Get Game Response</button>
-         
+      <div>{{main.gameResponse | json }}</div> 
+      
     </div>
   </div>
 </div>

@@ -7,6 +7,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
+router.post('/play', controller.play);
 router.post('/', controller.fetch);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);

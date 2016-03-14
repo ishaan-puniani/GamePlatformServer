@@ -6,11 +6,15 @@ class MainController {
 
   constructor($http) {
     this.$http = $http;
+    this.gameResponse = {};
     this.awesomeThings = [];
     $http.get('/api/things').then(response => {
       this.awesomeThings = response.data;
     });
-    
+
+
+
+
     this.availableGames = [];
     $http.get('/api/games',{filter:{active:true}}).then(response => {
       this.availableGames = response.data;
@@ -20,7 +24,11 @@ class MainController {
   
   getGameResponse(){
       debugger;
-      alert(this.selectedGame.gameId);
+      this.$http.post('/api/games/play',{game:this.selectedGame.gameId}).then(response => {
+        this.gameResponse = response.data;
+         alert(this.gameResponse);
+      });
+     
   }
 
   addThing() {

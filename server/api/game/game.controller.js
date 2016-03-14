@@ -8,9 +8,11 @@
  */
 
 'use strict';
-
+import request from 'request'
 import _ from 'lodash';
 import Game from './game.model';
+import constants from '../../constants';
+
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -104,4 +106,16 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function play(req, res){
+    console.log(req.body.game);
+    var action = 'init';
+    request.post(GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute", {form:{
+          game: req.body.game,
+          action: action
+        }},function(err,httpResponse,body){
+            respondWithResult(res)(body);       
+    });
+    
 }
