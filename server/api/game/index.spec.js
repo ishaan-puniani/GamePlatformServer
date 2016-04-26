@@ -6,6 +6,7 @@ var gameCtrlStub = {
   index: 'gameCtrl.index',
   show: 'gameCtrl.show',
   create: 'gameCtrl.create',
+  fetch: 'gameCtrl.fetch',
   update: 'gameCtrl.update',
   destroy: 'gameCtrl.destroy'
 };
@@ -28,7 +29,7 @@ var gameIndex = proxyquire('./index.js', {
   './game.controller': gameCtrlStub
 });
 
-describe('Thing API Router:', function() {
+describe('Game API Router:', function() {
 
   it('should return an express router instance', function() {
     expect(gameIndex).to.equal(routerStub);
@@ -58,7 +59,7 @@ describe('Thing API Router:', function() {
 
     it('should route to game.controller.create', function() {
       expect(routerStub.post
-        .withArgs('/', 'gameCtrl.create')
+        .withArgs('/', 'gameCtrl.fetch')
         ).to.have.been.calledOnce;
     });
 

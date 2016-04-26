@@ -20,6 +20,18 @@ import constants from '../../constants';
                     description: "Game static content host server",
                     value: "http://localhost:9080",
                     active: true
+                },
+                {
+                    name: constants.configurationKeys.defaultCurrency,
+                    description: "Default currency of the this Casino",
+                    value: "EURO",
+                    active: true
+                },
+                {
+                    name: constants.configurationKeys.defaultBalanceForDemoPlay,
+                    description: "Default balance credited for demo play",
+                    value: 5000,
+                    active: true
                 }
 
             ],
@@ -32,13 +44,13 @@ import constants from '../../constants';
             users: [{
                     provider: 'local',
                     name: 'Test User',
-                    email: 'test',
+                    email: 'test@test.com',
                     password: 'test'
                 }, {
                     provider: 'local',
                     role: 'admin',
                     name: 'admin',
-                    email: 'admin',
+                    email: 'admin@admin.com',
                     password: 'admin'
                 }]
         };

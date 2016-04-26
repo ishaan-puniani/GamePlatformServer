@@ -23,7 +23,7 @@ class MainController {
   }
   
   getGameResponse(){
-      this.$http.post('/api/games/play',{game:this.selectedGame.gameId,action:this.action}).then(response => {
+      this.$http.post('/api/games/play',{game:this.selectedGame.gameId,action:this.action,bet:this.bet}).then(response => {
         this.gameResponse = response.data;
          alert(this.gameResponse);
       });

@@ -108,14 +108,27 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 
-export function play(req, res){
+export function play(req, res,next){
     console.log(req.body.game,req.body.action);
-    
-    request.post(GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute", {form:{
+    var game =  _.merge({
           game: req.body.game,
-          action: req.body.action
-        }},function(err,httpResponse,body){
-            respondWithResult(res)(body);       
+          action: req.body.action,
+        }, req.session.gameReq);
+        
+        
+        var options = {
+                url: GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute",
+                method:"POST",
+                headers: {
+                  "Content-type": "application/json"
+                },
+                body:JSON.stringify(game)
+};
+        
+    request(options, function(err,httpResponse,body){
+        req.session.gameRes = JSON.parse(body);
+        next();
+ //           respondWithResult(res)(body);       
     });
     
 }
