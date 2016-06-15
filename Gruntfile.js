@@ -435,9 +435,8 @@ module.exports = function (grunt) {
         }
       },
       dist: [
-        'newer:babel:client'
-		//,
-        //'imagemin'
+        'newer:babel:client',
+        'imagemin'
       ]
     },
 

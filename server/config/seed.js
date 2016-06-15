@@ -28,8 +28,11 @@ Game.find({}).removeAsync()
 
 Configurations.find({}).removeAsync()
   .then(() => {
-    Configurations.create(defaultConfig.configurations);
-    Configurations.find({})
+    Configurations.create(defaultConfig.configurations,function(err,res){
+        if(err){
+            
+        }else{
+                Configurations.find({})
                 .then(function (res) {
                     console.log(res);
                 var config = {};
@@ -44,6 +47,10 @@ Configurations.find({}).removeAsync()
                     
                 })
                 .catch(console.log("Error in fetching configurations"));
+        }
+        
+    });
+
   });
 
 User.find({}).removeAsync()
