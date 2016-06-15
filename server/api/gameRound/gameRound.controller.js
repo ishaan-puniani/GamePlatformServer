@@ -1,19 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/games              ->  index
- * POST    /api/games              ->  create
- * GET     /api/games/:id          ->  show
- * PUT     /api/games/:id          ->  update
- * DELETE  /api/games/:id          ->  destroy
+ * GET     /api/gameRounds              ->  index
+ * POST    /api/gameRounds              ->  create
+ * GET     /api/gameRounds/:id          ->  show
+ * PUT     /api/gameRounds/:id          ->  update
+ * DELETE  /api/gameRounds/:id          ->  destroy
  */
 
 'use strict';
-import request from 'request'
+
 import _ from 'lodash';
-import Game from './game.model';
-import constants from '../../constants';
-
-
+import GameRound from './gameRound.model';
+/*
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -61,75 +59,68 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Games
+// Gets a list of GameRound
 export function index(req, res) {
-  Game.findAsync()
+  GameRound.findAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
-// Gets a filtered list of Games
-export function fetch(req, res) {
-  Game.findAsync(req.body.filter)
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-// Gets a single Game from the DB
+
+// Gets a single GameRound from the DB
 export function show(req, res) {
-  Game.findByIdAsync(req.params.id)
+  GameRound.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Game in the DB
+// Creates a new GameRound in the DB
 export function create(req, res) {
-  Game.createAsync(req.body)
+  GameRound.createAsync(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Game in the DB
+// Updates an existing GameRound in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Game.findByIdAsync(req.params.id)
+  GameRound.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Game from the DB
+// Deletes a GameRound from the DB
 export function destroy(req, res) {
-  Game.findByIdAsync(req.params.id)
+  GameRound.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
 }
-
-export function play(req, res,next){
-    console.log(req.body.game,req.body.action);
-    var game =  _.merge({
-          game: req.body.game,
-          action: req.body.action,
-        }, req.session.gameReq);
-        console.log("play");
-        console.log(game)
-        var options = {
-                url: GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute",
-                method:"POST",
-                headers: {
-                  "Content-type": "application/json"
-                },
-                body:JSON.stringify(game)
-};
-        
-    request(options, function(err,httpResponse,body){
-        req.Game.gameResponse = JSON.parse(body);
-        console.log("game response");
-        next();
-    //        respondWithResult(res)(body);       
-    });
+*/
+export function insert(obj,callback) {
+    var initObj = {
+        userId:obj.userId,
+        bet:obj.bet,
+        balance:obj.balance,
+        currency:obj.currency,
+        win:obj.win,
+        game:obj.game,
+        action:obj.action,
+        outcome:obj.outcome,
+        isOver:obj.over
+    }
     
+    GameRound.create(initObj,callback);
+}
+
+
+function update(userId,amtToInc,lock,callback) {
+   GameRound.findOneAndUpdate({userId:userId},
+                            {$inc:{balance:amtToInc},$set:{locked:lock}},
+                            {upsert: false,new:true}, 
+                            callback);
 }

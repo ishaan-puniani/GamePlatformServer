@@ -1,19 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/games              ->  index
- * POST    /api/games              ->  create
- * GET     /api/games/:id          ->  show
- * PUT     /api/games/:id          ->  update
- * DELETE  /api/games/:id          ->  destroy
+ * GET     /api/wallets              ->  index
+ * POST    /api/wallets              ->  create
+ * GET     /api/wallets/:id          ->  show
+ * PUT     /api/wallets/:id          ->  update
+ * DELETE  /api/wallets/:id          ->  destroy
  */
 
 'use strict';
-import request from 'request'
+
 import _ from 'lodash';
-import Game from './game.model';
-import constants from '../../constants';
-
-
+import Wallet from './wallet.model';
+/*
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -61,75 +59,70 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Games
+// Gets a list of Wallet
 export function index(req, res) {
-  Game.findAsync()
+  Wallet.findAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
-// Gets a filtered list of Games
-export function fetch(req, res) {
-  Game.findAsync(req.body.filter)
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-// Gets a single Game from the DB
+
+// Gets a single Wallet from the DB
 export function show(req, res) {
-  Game.findByIdAsync(req.params.id)
+  Wallet.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Game in the DB
+// Creates a new Wallet in the DB
 export function create(req, res) {
-  Game.createAsync(req.body)
+  Wallet.createAsync(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Game in the DB
+// Updates an existing Wallet in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Game.findByIdAsync(req.params.id)
+  Wallet.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Game from the DB
+// Deletes a Wallet from the DB
 export function destroy(req, res) {
-  Game.findByIdAsync(req.params.id)
+  Wallet.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+*/
+export function placeBet(obj,callback) {
+    update(obj.userId,(-1*obj.bet),true,callback);
+}
+export function createIfNotExists(obj,callback) {
+    var initObj = {
+        userId:obj.userId,
+        balance:obj.balance,
+        locked:false,
+        currency:obj.currency
+    }
+    Wallet.findOneAndUpdate(
+        {userId:obj.userId}, 
+        {$setOnInsert: initObj}, 
+        {upsert: true,new:true}, 
+        callback
+    );
+}
 
-export function play(req, res,next){
-    console.log(req.body.game,req.body.action);
-    var game =  _.merge({
-          game: req.body.game,
-          action: req.body.action,
-        }, req.session.gameReq);
-        console.log("play");
-        console.log(game)
-        var options = {
-                url: GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute",
-                method:"POST",
-                headers: {
-                  "Content-type": "application/json"
-                },
-                body:JSON.stringify(game)
-};
-        
-    request(options, function(err,httpResponse,body){
-        req.Game.gameResponse = JSON.parse(body);
-        console.log("game response");
-        next();
-    //        respondWithResult(res)(body);       
-    });
-    
+
+function update(userId,amtToInc,lock,callback) {
+   Wallet.findOneAndUpdate({userId:userId},
+                            {$inc:{balance:amtToInc},$set:{locked:lock}},
+                            {upsert: false,new:true}, 
+                            callback);
 }

@@ -17,7 +17,7 @@ var UserSchema = new Schema({
   password: String,
   provider: String,
   salt: String
-});
+}, { timestamps: true });
 
 /**
  * Virtuals
