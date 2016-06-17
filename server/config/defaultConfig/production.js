@@ -40,6 +40,11 @@ import constants from '../../constants';
                     gameId: "Slot_Server",
                     variant: "desktop",
                     active: true
+                },{
+                    name: "JackOrBetter",
+                    gameId: "JackOrBetter_Server",
+                    variant: "desktop",
+                    active: true
                 }],
             users: [{
                     provider: 'local',

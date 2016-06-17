@@ -19,7 +19,9 @@ import passport from 'passport';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
+
 var mongoStore = connectMongo(session);
+var cors = require('cors');
 
 export default function(app) {
   var env = app.get('env');
@@ -46,6 +48,19 @@ export default function(app) {
       db: 'game-platform-server'
     })
   }));
+
+var whitelist = [
+    'http://localhost:90',
+];
+var corsOptions = {
+    origin: function(origin, callback){
+        var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+        callback(null, originIsWhitelisted);
+    },
+    credentials: true
+};
+app.use(cors(corsOptions));
+
 
   /**
    * Lusca - express server security
