@@ -13,6 +13,8 @@ import _ from 'lodash';
 import Game from './game.model';
 import constants from '../../constants';
 
+import * as logger from '../../components/logger';
+
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -109,27 +111,21 @@ export function destroy(req, res) {
 }
 
 export function play(req, res,next){
-    console.log(req.body.game,req.body.action);
-    var game =  _.merge({
-          game: req.body.game,
-          action: req.body.action,
-        }, req.session.gameReq);
-        console.log("play");
-        console.log(game)
-        var options = {
-                url: GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute",
-                method:"POST",
-                headers: {
-                  "Content-type": "application/json"
-                },
-                body:JSON.stringify(game)
-};
+    logger.log(0,"game.controller","play",req.Game);
+    // todo : must have game and action in the req.Game.rawReq
+    var options = {
+                    url: GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute",
+                    method:"POST",
+                    headers: {
+                      "Content-type": "application/json"
+                    },
+                    body : JSON.stringify(req.Game.rawReq)
+                };
         
     request(options, function(err,httpResponse,body){
+        logger.log(0,"game.controller","play response",body);
         req.Game.gameResponse = JSON.parse(body);
-        console.log("game response");
         next();
-    //        respondWithResult(res)(body);       
     });
     
 }
