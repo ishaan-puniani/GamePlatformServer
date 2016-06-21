@@ -116,7 +116,21 @@ export function insert(obj,callback) {
     
     GameRound.create(initObj,callback);
 }
-
+export function getLastIncompleteRound(obj,callback){
+    GameRound.findOne({
+        userId:obj.userId,
+        game:obj.game
+    }, null, {sort: {createdAt: -1 }}, function(err,round){
+        if(err){
+            callback(err,round)
+        }
+        else if(round && round.outcome && round.outcome.roundOver === false){
+            callback(err,round)
+        }else{
+            callback(undefined,undefined);
+        }
+    });
+}
 
 function update(userId,amtToInc,lock,callback) {
    GameRound.findOneAndUpdate({userId:userId},
