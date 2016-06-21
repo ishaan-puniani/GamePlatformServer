@@ -101,9 +101,14 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 */
+export function getWalletOfUser(userId,callback) {
+    Wallet.findOne({userId:userId},callback);
+}
+
 export function placeBet(obj,callback) {
     update(obj.userId,(-1*obj.bet),true,callback);
 }
+
 export function createIfNotExists(obj,callback) {
     var initObj = {
         userId:obj.userId,

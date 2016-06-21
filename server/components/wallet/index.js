@@ -6,9 +6,10 @@
 
 import * as walletController from '../../api/wallet/wallet.controller' ;
 import constants from '../../constants';
+import * as logger from '../logger';
 
 export function managePreGameRequest(req, res,next){
-    console.log("Wallet:managePreGameRequest");
+    logger.log(0,"Wallet","managePreGameRequest");
     
     // if game request is triggered first time then load initial balance and currency
     if(req.Game.action==="init"){
@@ -30,7 +31,7 @@ export function managePreGameRequest(req, res,next){
             
         });
     }
-    if(req.Game.action==="spin"){
+    if(req.Game.action==="spin" || req.Game.action==="deal" ){
         walletController.placeBet({
             userId:req.Game.userId,
             bet:req.Game.bet
@@ -47,34 +48,25 @@ export function managePreGameRequest(req, res,next){
             }
         })
     }
+    if(req.Game.action==="draw"){
+        walletController.getWalletOfUser(req.Game.userId,function(err,walletResponse){
+            if(err){
+                
+            }else{
+                if(!req.Game.wallet){
+                    req.Game.wallet={};
+                    req.Game.wallet.balance = walletResponse.balance;
+                    req.Game.wallet.currency = walletResponse.currency;
+                }
+                next();
+            }
+        })
+    }
 }
 export function managePostGameRequest(req, res,next){
-    console.log("Wallet:managePostGameRequest");
+    logger.log(0,"Wallet","managePostGameRequest");
     
      
     
     next();
-}
-
-
-
-export function update(req, res,next){
-    console.log("Wallet:update");
-    
-    if(!req.session.user){
-        req.session.user = "DEMO-"+ uuid.v1()
-    }
-    console.log(req.session.user);
-    next();
-}
-export function getInitBalance(req, res,next){
-    console.log("Wallet:getInitBalance");
-    
-    if(!req.session.user){
-        req.session.user = "DEMO-"+ uuid.v1()
-    }
-    console.log(req.session.user);
-    next();
-    
-    
 }

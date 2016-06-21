@@ -10,7 +10,6 @@ var interceptor =  require('../../components/interceptor');
 var router = express.Router();
 
 
-
 import * as auth from '../../auth/auth.service';
 import constants from '../../constants';
 
@@ -21,6 +20,7 @@ router.get('/', gameController.index);
 router.get('/:id', gameController.show);
 
 router.post('/play',interceptor.preGameRequest,
+                    auth.getUserIdentity(),
                     sessionManager.getSession,
                     sessionManager.managePreGameRequest,
                     walletManager.managePreGameRequest,
