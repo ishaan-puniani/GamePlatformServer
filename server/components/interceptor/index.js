@@ -13,7 +13,7 @@ export function preGameRequest(req, res,next){
     req.Game.action = req.body.action;
     req.Game.bet = req.body.bet ? parseFloat(req.body.bet) : 0;
     req.Game.betLevel = req.body.betLevel;
-    
+    req.Game.userId = req.body.userID;
     req.Game.rawReq = req.body;
     
     next();

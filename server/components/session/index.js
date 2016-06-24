@@ -10,7 +10,7 @@ export function getSession(req, res,next){
     logger.log(0,"Session","getSession",req.user);
      var userId = (req.user && req.user._id) ? req.user._id : req.session.user;
     if(!userId && req.Game.action === "init"){
-        userId = "DEMO-"+ uuid.v1();
+        userId = req.Game.userId ? req.Game.userId : "DEMO-"+ uuid.v1();
     }else{
         // log execption "Invalid Request"
     }
