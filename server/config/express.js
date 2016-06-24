@@ -51,6 +51,7 @@ export default function(app) {
 
 var whitelist = [
     'http://localhost:90',
+    'https://jackorbetter-client.appspot.com'
 ];
 var corsOptions = {
     origin: function(origin, callback){
