@@ -91,8 +91,12 @@ export function getUserIdentity() {
       // allow access_token to be passed through query parameter as well
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
+        validateJwt(req, res, next);
+      }else{
+          next();// allow play for fun
+          // todo : test in interceptor before placing bet if it id demo user and check againest its init status to be super sure
       }
-      validateJwt(req, res, next);
+      
     })
     // Attach user to request
     .use(function(req, res, next) {
