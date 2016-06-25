@@ -7,7 +7,7 @@
 import * as logger from '../logger';
 
 export function preGameRequest(req, res,next){
-    logger.log(0,"Interceptor","managePreGameRequest",req.body);
+    logger.log(0,"Interceptor","managePreGameRequest",JSON.stringify(req.body));
     req.Game = {};
     req.Game.game = req.body.game;
     req.Game.action = req.body.action;
@@ -49,7 +49,7 @@ export function preGameResponse(req, res,next){
 }
 export function postGameResponse(req, res,next){
     logger.log(0,"Interceptor","postGameResponse");
-    req.Game.win = req.Game.gameResponse.win?parseInt(req.Game.gameResponse.win):0;
+    req.Game.win = req.Game.gameResponse.win ? parseFloat(req.Game.gameResponse.win) : 0;
     req.Game.roundOver = req.Game.gameResponse.roundOver;
     req.Game.symbols = req.Game.gameResponse.symbols;
     req.Game.betlines = req.Game.gameResponse.betlines;

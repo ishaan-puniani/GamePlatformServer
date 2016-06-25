@@ -14,8 +14,8 @@ export function managePreGameRequest(req, res,next){
     // if game request is triggered first time then load initial balance and currency
     if(req.Game.action==="init"){
         walletController.createIfNotExists({
-            userId:req.Game.userId,
-            balance:parseInt(GLOBAL.config[constants.configurationKeys.defaultBalanceForDemoPlay]),
+            userId : req.Game.userId,
+            balance : parseInt(GLOBAL.config[constants.configurationKeys.defaultBalanceForDemoPlay]),
             currency : GLOBAL.config[constants.configurationKeys.defaultCurrency]
         },function(err,walletResponse){
             if(err){
@@ -65,8 +65,22 @@ export function managePreGameRequest(req, res,next){
 }
 export function managePostGameRequest(req, res,next){
     logger.log(0,"Wallet","managePostGameRequest");
-    
+     walletController.addWin({
+            userId:req.Game.userId,
+            win : req.Game.win
+        },function(err,walletResponse){
+            if(err){
+                
+            }else{
+                if(!req.Game.wallet){
+                    req.Game.wallet={};
+                    req.Game.wallet.balance = walletResponse.balance;
+                    req.Game.wallet.currency = walletResponse.currency;
+                }
+                next();
+            }
+        })
      
     
-    next();
+  // next();
 }

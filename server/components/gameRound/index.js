@@ -37,6 +37,9 @@ export function managePostGameRequest(req, res,next){
         // no need to insert "init" of restoring game
         next();
     }else{
+         if(req.Game.action === "init"){
+             next();
+         }else{
         gameRoundController.insert({userId:req.Game.userId,
                 bet:req.Game.bet,
                 balance:req.Game.wallet.balance,
@@ -53,5 +56,6 @@ export function managePostGameRequest(req, res,next){
                         next();
                     }
             });
+        }
     }
 }

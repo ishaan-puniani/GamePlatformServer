@@ -11,7 +11,8 @@
 
 import _ from 'lodash';
 import Wallet from './wallet.model';
-/*
+import Transaction from './transaction.model'
+
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -20,7 +21,35 @@ function respondWithResult(res, statusCode) {
     }
   };
 }
+function handleEntityNotFound(res) {
+  return function(entity) {
+    if (!entity) {
+      res.status(404).end();
+      return null;
+    }
+    return entity;
+  };
+}
 
+function handleError(res, statusCode) {
+  statusCode = statusCode || 500;
+  return function(err) {
+    res.status(statusCode).send(err);
+  };
+}
+
+// Gets a list of Wallet
+export function index(req, res) {
+  Transaction.aggregateAsync([{ 
+    $group: { 
+            _id: "$type", 
+            total: { $sum: "$amount" }
+        } 
+    }])
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+/*
 function saveUpdates(updates) {
   return function(entity) {
     var updated = _.merge(entity, updates);
@@ -42,29 +71,7 @@ function removeEntity(res) {
   };
 }
 
-function handleEntityNotFound(res) {
-  return function(entity) {
-    if (!entity) {
-      res.status(404).end();
-      return null;
-    }
-    return entity;
-  };
-}
 
-function handleError(res, statusCode) {
-  statusCode = statusCode || 500;
-  return function(err) {
-    res.status(statusCode).send(err);
-  };
-}
-
-// Gets a list of Wallet
-export function index(req, res) {
-  Wallet.findAsync()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
 
 // Gets a single Wallet from the DB
 export function show(req, res) {
@@ -106,7 +113,16 @@ export function getWalletOfUser(userId,callback) {
 }
 
 export function placeBet(obj,callback) {
-    update(obj.userId,(-1*obj.bet),true,callback);
+    Transaction.create({userId: obj.userId,amount: (-1*obj.bet), type:"BET"},function(err,transactionLooged){
+        update(obj.userId,(-1*obj.bet),callback);
+    });
+    
+}
+export function addWin(obj,callback) {
+    Transaction.create({userId: obj.userId,amount: obj.win, type:"WIN"},function(err,transactionLooged){
+        update(obj.userId,obj.win,callback);
+    });
+    
 }
 
 export function createIfNotExists(obj,callback) {
@@ -124,10 +140,9 @@ export function createIfNotExists(obj,callback) {
     );
 }
 
-
-function update(userId,amtToInc,lock,callback) {
+function update(userId,amtToInc,callback) {
    Wallet.findOneAndUpdate({userId:userId},
-                            {$inc:{balance:amtToInc},$set:{locked:lock}},
+                            {$inc:{balance:amtToInc}},
                             {upsert: false,new:true}, 
                             callback);
 }
