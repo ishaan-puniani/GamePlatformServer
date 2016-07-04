@@ -24,7 +24,7 @@ module.exports = {
   },
   
   ges:{
-      uri: process.env.GES_URI || 
+      uri: process.env.GES_PORT_8080_TCP_ADDR ? 'http://'+process.env.GES_PORT_8080_TCP_ADDR+':'+process.env.GES_PORT_8080_TCP_PORT : 
            "http://gameserver-gameolive.rhcloud.com"
       
   },
