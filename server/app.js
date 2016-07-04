@@ -11,7 +11,9 @@ import config from './config/environment';
 import http from 'http';
 
 console.log(process.env.MONGODB_URI);
-console.log(process.env.GES_URI);
+console.log('http://'+process.env.GES_PORT_80_TCP_ADDR+':'+process.env.GES_PORT_80_TCP_PORT);
+console.log('http://'+process.env.GES_PORT_8080_TCP_ADDR+':'+process.env.GES_PORT_8080_TCP_PORT);
+console.log('http://'+process.env.GES_PORT_81_TCP_ADDR+':'+process.env.GES_PORT_81_TCP_PORT);
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
