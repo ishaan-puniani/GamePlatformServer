@@ -31,7 +31,11 @@ var all = {
   secrets: {
     session: 'game-platform-server-secret'
   },
-
+  ges:{
+      uri: process.env.GES_URI || 
+           "http://gameserver-gameolive.rhcloud.com"
+      
+  },
   // MongoDB connection options
   mongo: {
     options: {

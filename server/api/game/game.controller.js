@@ -12,6 +12,7 @@ import request from 'request'
 import _ from 'lodash';
 import Game from './game.model';
 import constants from '../../constants';
+import config from '../../config/environment';
 
 import * as logger from '../../components/logger';
 
@@ -112,9 +113,11 @@ export function destroy(req, res) {
 
 export function play(req, res,next){
     logger.log(0,"game.controller","play",req.Game);
+    logger.log(0,"game.controller","config.ges.uri ",config.ges.uri );
     // todo : must have game and action in the req.Game.rawReq
+    
     var options = {
-                    url: GLOBAL.config[constants.configurationKeys.gameServerUrl]+"/api/execute",
+                    url: config.ges.uri + "/api/execute",
                     method:"POST",
                     headers: {
                       "Content-type": "application/json"

@@ -22,6 +22,12 @@ module.exports = {
           process.env.OPENSHIFT_APP_NAME ||
           'mongodb://localhost/gameplatformserver'
   },
+  
+  ges:{
+      uri: process.env.GES_URI || 
+           "http://gameserver-gameolive.rhcloud.com"
+      
+  },
 
   // Seed database on startup
   seedDB: true
