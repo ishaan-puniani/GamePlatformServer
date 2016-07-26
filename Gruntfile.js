@@ -382,6 +382,13 @@ module.exports = function (grunt) {
             '<%= yeoman.server %>/**/*',
             '!<%= yeoman.server %>/config/local.env.sample.js'
           ]
+        }, {
+          expand: true,
+          dest: '<%= yeoman.dist %>',
+          src: [
+		    '<%= yeoman.client %>/swagger-ui/*',
+            '<%= yeoman.client %>/swagger-ui/*/*'
+          ]
         }]
       },
       styles: {
