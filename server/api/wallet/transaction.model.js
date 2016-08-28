@@ -8,4 +8,4 @@ var TransactionSchema = new mongoose.Schema({
   type: String
 }, { timestamps: true });
 
-export default mongoose.model('Transaction', TransactionSchema);
+export default mongoose.model('Transaction1', TransactionSchema);

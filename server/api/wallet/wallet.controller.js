@@ -40,11 +40,11 @@ function handleError(res, statusCode) {
 
 // Gets a list of Wallet
 export function index(req, res) {
-  Transaction.aggregateAsync([{ 
-    $group: { 
-            _id: "$type", 
+  Transaction.aggregateAsync([{
+    $group: {
+            _id: "$type",
             total: { $sum: "$amount" }
-        } 
+        }
     }])
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -108,6 +108,30 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 */
+
+
+export function initUserWallet(req, res) {
+
+}
+
+export function getUserWallet(req, res) {
+
+}
+
+export function credit(req, res) {
+
+}
+
+export function debit(req, res) {
+
+}
+
+
+
+
+
+
+
 export function getWalletOfUser(userId,callback) {
     Wallet.findOne({userId:userId},callback);
 }
@@ -116,13 +140,13 @@ export function placeBet(obj,callback) {
     Transaction.create({userId: obj.userId,amount: (-1*obj.bet), type:"BET"},function(err,transactionLooged){
         update(obj.userId,(-1*obj.bet),callback);
     });
-    
+
 }
 export function addWin(obj,callback) {
     Transaction.create({userId: obj.userId,amount: obj.win, type:"WIN"},function(err,transactionLooged){
         update(obj.userId,obj.win,callback);
     });
-    
+
 }
 
 export function createIfNotExists(obj,callback) {
@@ -133,16 +157,18 @@ export function createIfNotExists(obj,callback) {
         currency:obj.currency
     }
     Wallet.findOneAndUpdate(
-        {userId:obj.userId}, 
-        {$setOnInsert: initObj}, 
-        {upsert: true,new:true}, 
+        {userId:obj.userId},
+        {$setOnInsert: initObj},
+        {upsert: true,new:true},
         callback
     );
 }
 
+
+
 function update(userId,amtToInc,callback) {
    Wallet.findOneAndUpdate({userId:userId},
                             {$inc:{balance:amtToInc}},
-                            {upsert: false,new:true}, 
+                            {upsert: false,new:true},
                             callback);
 }

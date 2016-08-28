@@ -115,20 +115,20 @@ export function play(req, res,next){
     logger.log(0,"game.controller","play",req.Game);
     logger.log(0,"game.controller","config.ges.uri ",config.ges.uri );
     // todo : must have game and action in the req.Game.rawReq
-    
+
     var options = {
-                    url: config.ges.uri + "/api/execute",
+                    url: "http://localhost:9001" + "/api/execute",
                     method:"POST",
                     headers: {
                       "Content-type": "application/json"
                     },
                     body : JSON.stringify(req.Game.rawReq)
                 };
-        
+
     request(options, function(err,httpResponse,body){
-        logger.log(0,"game.controller","play response",body);
+       // logger.log(0,"game.controller","play response",body);
         req.Game.gameResponse = JSON.parse(body);
         next();
     });
-    
+
 }
