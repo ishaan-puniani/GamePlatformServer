@@ -54,7 +54,7 @@ var config = {
 
   // Prepare environment for tests
   params: {
-    serverConfig: require('./server/config/environment')
+    serverConfig: require('./src/main/server/config/environment')
   },
 
   onPrepare: function() {
