@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  user = {};
+
   class MainController {
 
     constructor($http) {
