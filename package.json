@@ -88,6 +88,7 @@
     "mocha": "^2.2.5",
     "open": "~0.0.4",
     "phantomjs": "^1.9.18",
+    "precommit-hook": "^3.0.0",
     "proxyquire": "^1.0.1",
     "requirejs": "~2.1.11",
     "sinon": "^1.16.1",
@@ -103,11 +104,11 @@
     "start": "node server",
     "test": "grunt test",
     "lint": "eslint -c .eslintrc src",
-    "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update"
+    "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
+    "validate": "npm ls"
   },
   "pre-commit": [
-    "lint",
-    "test"
+    "lint"
   ],
   "private": true
 }

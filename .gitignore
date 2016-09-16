@@ -4,7 +4,8 @@ public
 .idea
 src/main/client/bower_components
 dist
-/server/config/local.env.js
+src/main/server/config/local.env.js
+src/main/client/app/app.constant.js
 npm-debug.log
 coverage
 nbproject/
